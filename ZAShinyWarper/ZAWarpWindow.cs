@@ -439,6 +439,8 @@ namespace PLADumper
                 return;
             }
 
+            var PingList = new List<PictureBox>() { ShinymonPic1, ShinymonPic2, ShinymonPic3, ShinymonPic4, ShinymonPic5, ShinymonPic6, ShinymonPic7, ShinymonPic8, ShinymonPic9, ShinymonPic10 };
+            var client = new HttpClient();
             var filter = getFilter();
             var warpInterval = (int)numericUpDownSpawnCheckTime.Value;
             var camSpeed = (int)numericUpDownCamMove.Value;
@@ -467,6 +469,13 @@ namespace PLADumper
                 var newFound = shinyHunter.LoadStashedShinies(bot, "sets.txt");
                 if (newFound)
                 {
+                    ResetImage();
+                    for(int i = 0; i < PingList.Count; i++)
+                    {
+                        var Picurl = await client.GetStreamAsync(shinyHunter.StashedShinesPing[i]).ConfigureAwait(false);
+                        var img = Image.FromStream(Picurl);
+                        PingList[i].PerformSafely(() => PingList[i].Image = img);
+                    }
                     var newShinies = shinyHunter.DifferentShinies;
                     foreach (var pk in newShinies)
                     {
@@ -532,6 +541,15 @@ namespace PLADumper
                     else
                         await Task.Delay(warpInterval).ConfigureAwait(false);
                 }
+            }
+        }
+        private void ResetImage()
+        {
+            var PingList = new List<PictureBox>() { ShinymonPic1, ShinymonPic2, ShinymonPic3, ShinymonPic4, ShinymonPic5, ShinymonPic6, ShinymonPic7, ShinymonPic8, ShinymonPic9, ShinymonPic10 };
+
+            foreach (var pic in PingList)
+            {
+                pic.PerformSafely(() => pic.Image = null);
             }
         }
 
