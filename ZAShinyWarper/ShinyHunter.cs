@@ -199,19 +199,20 @@ namespace PLAWarper
             public ulong LocationHash { get; private set; } = 0;
             public uint EncryptionConstant => PKM.EncryptionConstant;
             public int? Rolls { get; }
+            public ulong? Seed { get; }
 
             public StashedShiny(T pk, ulong locHash)
             {
                 PKM = pk;
                 LocationHash = locHash;
                 if (PKM is PK9 zapk)
-                Rolls = ShinyRollChecker<T>.CheckValidDirtyZARNG(PKM);
+                (Rolls, Seed) = ShinyRollChecker<T>.CheckValidDirtyZARNG(PKM);
             }
 
             public string GetRollsInfo()
             {
                 if (Rolls.HasValue)
-                    return Rolls.Value < 4 ? $"Rolls: {Rolls.Value} (Legit or unknown)" : $"Rolls: {Rolls.Value} (Mad haxx)";
+                    return (Rolls.Value < 4 ? $"Rolls: {Rolls.Value} (Legit or unknown)" : $"Rolls: {Rolls.Value} (Mad haxx)") + $" Seed: {Seed:X16}";
                 else
                     return "Rolls: N/A";
             }
