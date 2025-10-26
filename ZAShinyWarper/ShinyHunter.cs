@@ -316,7 +316,7 @@ namespace PLAWarper
 
                 var pk = (T)construct.Invoke(new object[] { new Memory<byte>(data[8..]) });
                 var location = BitConverter.ToUInt64(data, 0);
-                if (pk.Species != 0)
+                if (pk.Species != 0 && pk.Species <= (ushort)Species.MAX_COUNT)
                 {
                     var stashed = new StashedShiny<T>(pk, location);
                     StashedShinies.Add(stashed);
