@@ -198,14 +198,25 @@ namespace PLAWarper
             public T PKM { get; private set; }
             public ulong LocationHash { get; private set; } = 0;
             public uint EncryptionConstant => PKM.EncryptionConstant;
+            public int? Rolls { get; }
 
             public StashedShiny(T pk, ulong locHash)
             {
                 PKM = pk;
                 LocationHash = locHash;
+                if (PKM is PK9 zapk)
+                Rolls = ShinyRollChecker<T>.CheckValidDirtyZARNG(PKM);
             }
 
-            public override string ToString() => $"Location hash: {LocationHash:X16}\r\n" + ShowdownParsing.GetShowdownText(PKM) + "\r\n";
+            public string GetRollsInfo()
+            {
+                if (Rolls.HasValue)
+                    return Rolls.Value < 4 ? $"Rolls: {Rolls.Value} (Legit or unknown)" : $"Rolls: {Rolls.Value} (Mad haxx)";
+                else
+                    return "Rolls: N/A";
+            }
+
+            public override string ToString() => $"Location hash: {LocationHash:X16}\r\n{GetRollsInfo()}\r\n" + ShowdownParsing.GetShowdownText(PKM) + "\r\n";
             
         }
 
