@@ -77,16 +77,16 @@
             btnWarp = new Button();
             lblCreateTwo = new Label();
             StashtedShinyGroup = new GroupBox();
-            ShinymonPic1 = new PictureBox();
-            ShinymonPic6 = new PictureBox();
-            ShinymonPic9 = new PictureBox();
-            ShinymonPic2 = new PictureBox();
-            ShinymonPic7 = new PictureBox();
-            ShinymonPic8 = new PictureBox();
-            ShinymonPic3 = new PictureBox();
-            ShinymonPic5 = new PictureBox();
-            ShinymonPic4 = new PictureBox();
             ShinymonPic10 = new PictureBox();
+            ShinymonPic4 = new PictureBox();
+            ShinymonPic5 = new PictureBox();
+            ShinymonPic3 = new PictureBox();
+            ShinymonPic8 = new PictureBox();
+            ShinymonPic7 = new PictureBox();
+            ShinymonPic2 = new PictureBox();
+            ShinymonPic9 = new PictureBox();
+            ShinymonPic6 = new PictureBox();
+            ShinymonPic1 = new PictureBox();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             gBShinyHunt.SuspendLayout();
@@ -96,16 +96,16 @@
             ((System.ComponentModel.ISupportInitialize)numericUpDownScale).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownScale2).BeginInit();
             StashtedShinyGroup.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)ShinymonPic1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ShinymonPic6).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ShinymonPic9).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ShinymonPic2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ShinymonPic7).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ShinymonPic8).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ShinymonPic3).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ShinymonPic5).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ShinymonPic4).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ShinymonPic10).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ShinymonPic4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ShinymonPic5).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ShinymonPic3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ShinymonPic8).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ShinymonPic7).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ShinymonPic2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ShinymonPic9).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ShinymonPic6).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ShinymonPic1).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -634,85 +634,95 @@
             StashtedShinyGroup.TabStop = false;
             StashtedShinyGroup.Text = "Stashted Shiny";
             // 
-            // ShinymonPic1
+            // ShinymonPic10
             // 
-            ShinymonPic1.Location = new Point(6, 22);
-            ShinymonPic1.Name = "ShinymonPic1";
-            ShinymonPic1.Size = new Size(96, 96);
-            ShinymonPic1.TabIndex = 0;
-            ShinymonPic1.TabStop = false;
-            // 
-            // ShinymonPic6
-            // 
-            ShinymonPic6.Location = new Point(108, 22);
-            ShinymonPic6.Name = "ShinymonPic6";
-            ShinymonPic6.Size = new Size(96, 96);
-            ShinymonPic6.TabIndex = 1;
-            ShinymonPic6.TabStop = false;
-            // 
-            // ShinymonPic9
-            // 
-            ShinymonPic9.Location = new Point(108, 328);
-            ShinymonPic9.Name = "ShinymonPic9";
-            ShinymonPic9.Size = new Size(96, 96);
-            ShinymonPic9.TabIndex = 2;
-            ShinymonPic9.TabStop = false;
-            // 
-            // ShinymonPic2
-            // 
-            ShinymonPic2.Location = new Point(6, 124);
-            ShinymonPic2.Name = "ShinymonPic2";
-            ShinymonPic2.Size = new Size(96, 96);
-            ShinymonPic2.TabIndex = 3;
-            ShinymonPic2.TabStop = false;
-            // 
-            // ShinymonPic7
-            // 
-            ShinymonPic7.Location = new Point(108, 124);
-            ShinymonPic7.Name = "ShinymonPic7";
-            ShinymonPic7.Size = new Size(96, 96);
-            ShinymonPic7.TabIndex = 4;
-            ShinymonPic7.TabStop = false;
-            // 
-            // ShinymonPic8
-            // 
-            ShinymonPic8.Location = new Point(108, 226);
-            ShinymonPic8.Name = "ShinymonPic8";
-            ShinymonPic8.Size = new Size(96, 96);
-            ShinymonPic8.TabIndex = 5;
-            ShinymonPic8.TabStop = false;
-            // 
-            // ShinymonPic3
-            // 
-            ShinymonPic3.Location = new Point(6, 226);
-            ShinymonPic3.Name = "ShinymonPic3";
-            ShinymonPic3.Size = new Size(96, 96);
-            ShinymonPic3.TabIndex = 6;
-            ShinymonPic3.TabStop = false;
-            // 
-            // ShinymonPic5
-            // 
-            ShinymonPic5.Location = new Point(6, 430);
-            ShinymonPic5.Name = "ShinymonPic5";
-            ShinymonPic5.Size = new Size(96, 96);
-            ShinymonPic5.TabIndex = 7;
-            ShinymonPic5.TabStop = false;
+            ShinymonPic10.Location = new Point(108, 430);
+            ShinymonPic10.Name = "ShinymonPic10";
+            ShinymonPic10.Size = new Size(96, 96);
+            ShinymonPic10.SizeMode = PictureBoxSizeMode.Zoom;
+            ShinymonPic10.TabIndex = 9;
+            ShinymonPic10.TabStop = false;
             // 
             // ShinymonPic4
             // 
             ShinymonPic4.Location = new Point(6, 328);
             ShinymonPic4.Name = "ShinymonPic4";
             ShinymonPic4.Size = new Size(96, 96);
+            ShinymonPic4.SizeMode = PictureBoxSizeMode.Zoom;
             ShinymonPic4.TabIndex = 8;
             ShinymonPic4.TabStop = false;
             // 
-            // ShinymonPic10
+            // ShinymonPic5
             // 
-            ShinymonPic10.Location = new Point(108, 430);
-            ShinymonPic10.Name = "ShinymonPic10";
-            ShinymonPic10.Size = new Size(96, 96);
-            ShinymonPic10.TabIndex = 9;
-            ShinymonPic10.TabStop = false;
+            ShinymonPic5.Location = new Point(6, 430);
+            ShinymonPic5.Name = "ShinymonPic5";
+            ShinymonPic5.Size = new Size(96, 96);
+            ShinymonPic5.SizeMode = PictureBoxSizeMode.Zoom;
+            ShinymonPic5.TabIndex = 7;
+            ShinymonPic5.TabStop = false;
+            // 
+            // ShinymonPic3
+            // 
+            ShinymonPic3.Location = new Point(6, 226);
+            ShinymonPic3.Name = "ShinymonPic3";
+            ShinymonPic3.Size = new Size(96, 96);
+            ShinymonPic3.SizeMode = PictureBoxSizeMode.Zoom;
+            ShinymonPic3.TabIndex = 6;
+            ShinymonPic3.TabStop = false;
+            // 
+            // ShinymonPic8
+            // 
+            ShinymonPic8.Location = new Point(108, 226);
+            ShinymonPic8.Name = "ShinymonPic8";
+            ShinymonPic8.Size = new Size(96, 96);
+            ShinymonPic8.SizeMode = PictureBoxSizeMode.Zoom;
+            ShinymonPic8.TabIndex = 5;
+            ShinymonPic8.TabStop = false;
+            // 
+            // ShinymonPic7
+            // 
+            ShinymonPic7.Location = new Point(108, 124);
+            ShinymonPic7.Name = "ShinymonPic7";
+            ShinymonPic7.Size = new Size(96, 96);
+            ShinymonPic7.SizeMode = PictureBoxSizeMode.Zoom;
+            ShinymonPic7.TabIndex = 4;
+            ShinymonPic7.TabStop = false;
+            // 
+            // ShinymonPic2
+            // 
+            ShinymonPic2.Location = new Point(6, 124);
+            ShinymonPic2.Name = "ShinymonPic2";
+            ShinymonPic2.Size = new Size(96, 96);
+            ShinymonPic2.SizeMode = PictureBoxSizeMode.Zoom;
+            ShinymonPic2.TabIndex = 3;
+            ShinymonPic2.TabStop = false;
+            // 
+            // ShinymonPic9
+            // 
+            ShinymonPic9.Location = new Point(108, 328);
+            ShinymonPic9.Name = "ShinymonPic9";
+            ShinymonPic9.Size = new Size(96, 96);
+            ShinymonPic9.SizeMode = PictureBoxSizeMode.Zoom;
+            ShinymonPic9.TabIndex = 2;
+            ShinymonPic9.TabStop = false;
+            // 
+            // ShinymonPic6
+            // 
+            ShinymonPic6.Location = new Point(108, 22);
+            ShinymonPic6.Name = "ShinymonPic6";
+            ShinymonPic6.Size = new Size(96, 96);
+            ShinymonPic6.SizeMode = PictureBoxSizeMode.Zoom;
+            ShinymonPic6.TabIndex = 1;
+            ShinymonPic6.TabStop = false;
+            // 
+            // ShinymonPic1
+            // 
+            ShinymonPic1.Location = new Point(6, 22);
+            ShinymonPic1.Name = "ShinymonPic1";
+            ShinymonPic1.Size = new Size(96, 96);
+            ShinymonPic1.SizeMode = PictureBoxSizeMode.Zoom;
+            ShinymonPic1.TabIndex = 0;
+            ShinymonPic1.TabStop = false;
             // 
             // ZAWarpWindow
             // 
@@ -742,16 +752,16 @@
             ((System.ComponentModel.ISupportInitialize)numericUpDownScale).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownScale2).EndInit();
             StashtedShinyGroup.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)ShinymonPic1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ShinymonPic6).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ShinymonPic9).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ShinymonPic2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ShinymonPic7).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ShinymonPic8).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ShinymonPic3).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ShinymonPic5).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ShinymonPic4).EndInit();
             ((System.ComponentModel.ISupportInitialize)ShinymonPic10).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ShinymonPic4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ShinymonPic5).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ShinymonPic3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ShinymonPic8).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ShinymonPic7).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ShinymonPic2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ShinymonPic9).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ShinymonPic6).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ShinymonPic1).EndInit();
             ResumeLayout(false);
             PerformLayout();
 
