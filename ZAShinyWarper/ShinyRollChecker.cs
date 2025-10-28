@@ -37,7 +37,7 @@ namespace PLAWarper
                 Span<int> ivs = [UNSET, UNSET, UNSET, UNSET, UNSET, UNSET];
                 Span<int> ivspk = [pkm.IV_HP, pkm.IV_ATK, pkm.IV_DEF, pkm.IV_SPA, pkm.IV_SPD, pkm.IV_SPE];
 
-                // We don't have encounter data for now, so we just skip possible flawless IVs
+                // We don't have encounter data for now, so we just skip possible flawless IVs. Alphas generally have 3 flawless IVs but I don't want to assume anything before PKHeX releases, so have this dirty thing.
                 if (fiv > 0)
                 { 
                     for (int j = 0; j < 6; j++)
@@ -69,6 +69,8 @@ namespace PLAWarper
                     continue;
                 if (pkm.IV_SPE != ivs[5])
                     continue;
+
+                // That's it, we could check ability, gender, nature, etc, but I feel dirty using SV PersonalTables for this
                 Console.WriteLine($"Valid seed: {s} / EC: {ec} / {pkm.FileName} Rolls: {tries}");
                 return (tries, s);
             }
