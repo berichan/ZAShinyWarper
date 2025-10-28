@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace PLADumper
 {
@@ -23,6 +24,7 @@ namespace PLADumper
         private const string filterConfigName = "filter_config.txt";
 
         private ShinyHunter<PK9> shinyHunter = new ShinyHunter<PK9>();
+        private readonly List<PictureBox> PingList;
 
         private LabelForm lf = new LabelForm();
 
@@ -38,6 +40,7 @@ namespace PLADumper
             InitializeComponent();
             CultureInfo.CurrentCulture = new CultureInfo("en-US", false);
             Application.ApplicationExit += (s, e) => cleanUpBot();
+            PingList = new List<PictureBox>() { ShinymonPic1, ShinymonPic2, ShinymonPic3, ShinymonPic4, ShinymonPic5, ShinymonPic6, ShinymonPic7, ShinymonPic8, ShinymonPic9, ShinymonPic10 };
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -114,7 +117,7 @@ namespace PLADumper
             return filter;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
             try
             {
@@ -124,6 +127,8 @@ namespace PLADumper
                 groupBox1.Enabled = true;
                 gBShinyHunt.Enabled = true;
                 shinyHunter.LoadStashedShinies(bot, "sets.txt");
+                var client = new HttpClient();
+                await DisplayStashedShinies(client).ConfigureAwait(false);
                 MessageBox.Show($"Connected to SysBot (network). The following shinies are stashed on your save currently: \r\n{shinyHunter.GetShinyStashInfo([.. shinyHunter.StashedShinies.Reverse()])}");
                 bot.SendBytes(Encoding.ASCII.GetBytes("detachController\r\n"));
                 cleanUpBot();
@@ -134,7 +139,7 @@ namespace PLADumper
             }
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private async void button4_Click(object sender, EventArgs e)
         {
             try
             {
@@ -144,6 +149,8 @@ namespace PLADumper
                 groupBox1.Enabled = true;
                 gBShinyHunt.Enabled = true;
                 shinyHunter.LoadStashedShinies(bot, "sets.txt");
+                var client = new HttpClient();
+                await DisplayStashedShinies(client).ConfigureAwait(false);
                 MessageBox.Show($"Connected to UsbBot (USB). The following shinies are stashed on your save currently: \r\n{shinyHunter.GetShinyStashInfo([.. shinyHunter.StashedShinies.Reverse()])}");
                 bot.SendBytes(Encoding.ASCII.GetBytes("detachController\r\n"));
                 cleanUpBot();
@@ -439,6 +446,7 @@ namespace PLADumper
                 return;
             }
 
+            var client = new HttpClient();
             var filter = getFilter();
             var warpInterval = (int)numericUpDownSpawnCheckTime.Value;
             var camSpeed = (int)numericUpDownCamMove.Value;
@@ -467,6 +475,7 @@ namespace PLADumper
                 var newFound = shinyHunter.LoadStashedShinies(bot, "sets.txt");
                 if (newFound)
                 {
+                    await DisplayStashedShinies(client).ConfigureAwait(false);
                     var newShinies = shinyHunter.DifferentShinies;
                     foreach (var pk in newShinies)
                     {
@@ -480,6 +489,9 @@ namespace PLADumper
                                     warping = false;
                                     cleanUpBot();
                                     bot.SendBytes(Encoding.ASCII.GetBytes("click X\r\n"));
+                                    await Task.Delay(1_000).ConfigureAwait(false);
+                                    bot.SendBytes(Encoding.ASCII.GetBytes("click HOME\r\n"));
+                                    await Task.Delay(1_000).ConfigureAwait(false);
                                     btnWarp.PerformSafely(() => btnWarp.Text = "Start Warping");
                                     setFiltersEnableState(true);
                                     MessageBox.Show($"A shiny matching the filter has been found after {currentWarps} attempts! Stopping warping.\r\n\r\n{pk}\r\n" +
@@ -534,7 +546,23 @@ namespace PLADumper
                 }
             }
         }
-
+        private void ResetImage()
+        {
+            foreach (var pic in PingList)
+            {
+                pic.PerformSafely(() => pic.Image = null);
+            }
+        }
+        private async Task DisplayStashedShinies(HttpClient client)
+        {
+            ResetImage();
+            for (int i = 0; i < shinyHunter.StashedShinesPing.Count; i++)
+            {
+                var Picurl = await client.GetStreamAsync(shinyHunter.StashedShinesPing[i]).ConfigureAwait(false);
+                var img = Image.FromStream(Picurl);
+                PingList[i].PerformSafely(() => PingList[i].Image = img);
+            }
+        }
         private void cBSpecies_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Select "Any" if none are selected
