@@ -316,21 +316,28 @@ namespace PLAWarper
 
                 var pk = (T)construct.Invoke(new object[] { new Memory<byte>(data[8..]) });
                 var location = BitConverter.ToUInt64(data, 0);
-                if (pk.Species != 0 && pk.Species <= (ushort)Species.MAX_COUNT)
+                if (pk.Species > 0 && pk.Species <= (ushort)Species.MAX_COUNT && pk.Valid)
                 {
                     var stashed = new StashedShiny<T>(pk, location);
                     StashedShinies.Add(stashed);
                     StashedShinesPing.Add(PokeImg(pk, false));
 
-                    var fileName = Path.Combine(STASH_FOLDER, pk.FileName);
-                    File.WriteAllBytes(fileName, pk.DecryptedPartyData);
+                    if (PreviousStashedShinies.Where(x => x.EncryptionConstant ==  stashed.EncryptionConstant).ToList().Count <= 0)
+                    {
+                        var fileName = Path.Combine(STASH_FOLDER, pk.FileName);
+                        File.WriteAllBytes(fileName, pk.DecryptedPartyData);
+                    }
                 }
             }
 
-            if (!string.IsNullOrEmpty(path))
-                File.WriteAllText(path, GetShinyStashInfo(StashedShinies));
-
+            
             DifferentShinies = StashedShinies.Where(pk => !PreviousStashedShinies.Any(x => x.EncryptionConstant == pk.EncryptionConstant)).ToList();
+            if(DifferentShinies.Any())
+            {
+                if (!string.IsNullOrEmpty(path))
+                    File.WriteAllText(path, GetShinyStashInfo(StashedShinies));
+
+            }
             return DifferentShinies.Any();
         }
 

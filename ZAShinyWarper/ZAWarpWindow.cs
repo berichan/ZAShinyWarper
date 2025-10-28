@@ -489,6 +489,9 @@ namespace PLADumper
                                     warping = false;
                                     cleanUpBot();
                                     bot.SendBytes(Encoding.ASCII.GetBytes("click X\r\n"));
+                                    await Task.Delay(1_000).ConfigureAwait(false);
+                                    bot.SendBytes(Encoding.ASCII.GetBytes("click HOME\r\n"));
+                                    await Task.Delay(1_000).ConfigureAwait(false);
                                     btnWarp.PerformSafely(() => btnWarp.Text = "Start Warping");
                                     setFiltersEnableState(true);
                                     MessageBox.Show($"A shiny matching the filter has been found after {currentWarps} attempts! Stopping warping.\r\n\r\n{pk}\r\n" +
