@@ -164,10 +164,13 @@ namespace PLAWarper
                 if (pk.Species != 0)
                 {
                     var stashed = new StashedShiny<T>(pk, location);
-                    StashedShinies.Add(stashed);
+                    if (!StashedShinies.Any(x => x.EncryptionConstant == pk.EncryptionConstant))
+                    {
+                        StashedShinies.Add(stashed);
 
-                    var fileName = Path.Combine(STASH_FOLDER, pk.FileName);
-                    File.WriteAllBytes(fileName, pk.DecryptedPartyData);
+                        var fileName = Path.Combine(STASH_FOLDER, pk.FileName);
+                        File.WriteAllBytes(fileName, pk.DecryptedPartyData);
+                    }
                 }
             }
 

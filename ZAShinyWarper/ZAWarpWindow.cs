@@ -547,6 +547,10 @@ namespace PLADumper
             if (camSpeed != 0)
                 bot.SendBytes(Encoding.ASCII.GetBytes($"setStick RIGHT {camSpeed} 0\r\n"));
 
+            // Refresh stashed shinies
+            _ = shinyHunter.LoadStashedShinies(bot, "sets.txt");
+            DisplayStashedShinies();
+
             while (warping)
             {
                 currentWarps++;
