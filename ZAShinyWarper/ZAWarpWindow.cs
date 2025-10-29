@@ -1,7 +1,4 @@
-﻿using NHSE.Injection;
-using PKHeX.Core;
-using PLAWarper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -10,6 +7,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using NHSE.Injection;
+using PKHeX.Core;
+using PKHeX.Drawing.PokeSprite;
+using PLAWarper;
 
 namespace PLADumper
 {
@@ -22,7 +23,8 @@ namespace PLADumper
         private const string configName = "positions.txt";
         private const string filterConfigName = "filter_config.txt";
 
-        private ShinyHunter<PK9> shinyHunter = new ShinyHunter<PK9>();
+        private ShinyHunter<PA9> shinyHunter = new ShinyHunter<PA9>();
+        private readonly List<PictureBox> StashList;
 
         private LabelForm lf = new LabelForm();
 
@@ -38,6 +40,7 @@ namespace PLADumper
             InitializeComponent();
             CultureInfo.CurrentCulture = new CultureInfo("en-US", false);
             Application.ApplicationExit += (s, e) => cleanUpBot();
+            StashList = new List<PictureBox>() { StashedShiny1, StashedShiny2, StashedShiny3, StashedShiny4, StashedShiny5, StashedShiny6, StashedShiny7, StashedShiny8, StashedShiny9, StashedShiny10 };
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -82,9 +85,9 @@ namespace PLADumper
             LoadAllAndUpdateUI();
         }
 
-        private ShinyHunter<PK9>.ShinyFilter<PK9> getFilter()
+        private ShinyHunter<PA9>.ShinyFilter<PA9> getFilter()
         {
-            var filter = new ShinyHunter<PK9>.ShinyFilter<PK9>();
+            var filter = new ShinyHunter<PA9>.ShinyFilter<PA9>();
             // Species - collect all checked species
             var checkedSpecies = new List<ushort>();
             for (int i = 0; i < cBSpecies.Items.Count; i++)
@@ -116,41 +119,128 @@ namespace PLADumper
 
         private void button1_Click(object sender, EventArgs e)
         {
-            try
+            if (bot != null && bot.Connected)
             {
-                var botsys = new SysBot();
-                botsys.Connect(textBox1.Text, 6000);
-                bot = botsys;
-                groupBox1.Enabled = true;
-                gBShinyHunt.Enabled = true;
-                shinyHunter.LoadStashedShinies(bot, "sets.txt");
-                MessageBox.Show($"Connected to SysBot (network). The following shinies are stashed on your save currently: \r\n{shinyHunter.GetShinyStashInfo([.. shinyHunter.StashedShinies.Reverse()])}");
-                bot.SendBytes(Encoding.ASCII.GetBytes("detachController\r\n"));
+                if (warping)
+                {
+                    warping = false;
+                    setFiltersEnableState(true);
+                    btnWarp.Text = "Start Warping";
+                }
+
+                groupBox1.Enabled = false;
+                gBShinyHunt.Enabled = false;
+                StashedShinyGroup.Enabled = false;
+                btnScreenOn.Enabled = false;
+                btnScreenOff.Enabled = false;
                 cleanUpBot();
+                ResetSprites();
+                bot = null;
+                button1.Text = "Connect";
+                button4.Enabled = true;
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message);
+                try
+                {
+                    var botsys = new SysBot();
+                    botsys.Connect(textBox1.Text, 6000);
+                    bot = botsys;
+                    button1.Text = "Disconnect";
+                    button4.Enabled = false;
+                    groupBox1.Enabled = true;
+                    gBShinyHunt.Enabled = true;
+                    StashedShinyGroup.Enabled = true;
+                    btnScreenOn.Enabled = true;
+                    btnScreenOff.Enabled = true;
+                    shinyHunter.LoadStashedShinies(bot, "sets.txt");
+                    DisplayStashedShinies();
+                    MessageBox.Show($"Connected to SysBot (network). \r\n{shinyHunter.GetShinyStashInfo([.. shinyHunter.StashedShinies.Reverse()])}");
+                    bot.SendBytes(Encoding.ASCII.GetBytes("detachController\r\n"));
+                    cleanUpBot();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            try
+            if (bot != null && bot.Connected)
             {
-                var botusb = new USBBot();
-                botusb.Connect();
-                bot = botusb;
-                groupBox1.Enabled = true;
-                gBShinyHunt.Enabled = true;
-                shinyHunter.LoadStashedShinies(bot, "sets.txt");
-                MessageBox.Show($"Connected to UsbBot (USB). The following shinies are stashed on your save currently: \r\n{shinyHunter.GetShinyStashInfo([.. shinyHunter.StashedShinies.Reverse()])}");
-                bot.SendBytes(Encoding.ASCII.GetBytes("detachController\r\n"));
+                if (warping)
+                {
+                    warping = false;
+                    setFiltersEnableState(true);
+                    btnWarp.Text = "Start Warping";
+                }
+
+                groupBox1.Enabled = false;
+                gBShinyHunt.Enabled = false;
+                StashedShinyGroup.Enabled = false;
+                btnScreenOn.Enabled = false;
+                btnScreenOff.Enabled = false;
                 cleanUpBot();
+                ResetSprites();
+                bot = null;
+                button4.Text = "ConnectUSB";
+                button1.Enabled = true;
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message);
+                try
+                {
+                    var botusb = new USBBot();
+                    botusb.Connect();
+                    bot = botusb;
+                    button4.Text = "DisconnectUSB";
+                    button1.Enabled = false;
+                    groupBox1.Enabled = true;
+                    gBShinyHunt.Enabled = true;
+                    btnScreenOn.Enabled = true;
+                    btnScreenOff.Enabled = true;
+                    shinyHunter.LoadStashedShinies(bot, "sets.txt");
+                    DisplayStashedShinies();
+                    MessageBox.Show($"Connected to UsbBot (USB). \r\n{shinyHunter.GetShinyStashInfo([.. shinyHunter.StashedShinies.Reverse()])}");
+                    bot.SendBytes(Encoding.ASCII.GetBytes("detachController\r\n"));
+                    cleanUpBot();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+        private void OnClickScreenOn(object sender, EventArgs e)
+        {
+            if (bot != null && bot.Connected)
+            {
+                try
+                {
+                    bot.SendBytes(Encoding.ASCII.GetBytes("screenOn\r\n"));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+        private void OnClickScreenOff(object sender, EventArgs e)
+        {
+            if (bot != null && bot.Connected)
+            {
+                try
+                {
+                    bot.SendBytes(Encoding.ASCII.GetBytes("screenOff\r\n"));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
 
@@ -467,6 +557,7 @@ namespace PLADumper
                 var newFound = shinyHunter.LoadStashedShinies(bot, "sets.txt");
                 if (newFound)
                 {
+                    DisplayStashedShinies();
                     var newShinies = shinyHunter.DifferentShinies;
                     foreach (var pk in newShinies)
                     {
@@ -520,6 +611,7 @@ namespace PLADumper
                         warping = false;
                         cleanUpBot();
                         btnWarp.PerformSafely(() => btnWarp.Text = "Start Warping");
+                        setFiltersEnableState(true);
                         MessageBox.Show($"Warping has failed, please check the console!");
                         break;
                     }
@@ -563,6 +655,51 @@ namespace PLADumper
             else // Clear "Any" if anything else is selected
             {
                 cBSpecies.SetItemChecked(0, false);
+            }
+        }
+
+        private void OnMouseHover(object sender, EventArgs e)
+        {
+            PictureBox pb = (PictureBox)sender;
+            pb.BorderStyle = BorderStyle.FixedSingle;
+
+            ShinyInfo.Hide(pb);
+            ShinyInfo.Active = false;
+            ShinyInfo.Active = true;
+
+            int index = StashList.IndexOf(pb);
+            if (index >= 0 && index < shinyHunter.StashedShinies.Count)
+            {
+                ShinyInfo.SetToolTip(pb, shinyHunter.StashedShinies[index].ToString());
+            }
+            else
+            {
+                ShinyInfo.SetToolTip(pb, "No shiny data");
+            }
+        }
+
+        private void ResetSprites()
+        {
+            foreach (var pic in StashList)
+            {
+                pic.PerformSafely(() => pic.Image = null);
+            }
+        }
+
+        private void DisplayStashedShinies()
+        {
+            ResetSprites();
+            for (int i = 0; i < shinyHunter.StashedShinies.Count; i++)
+            {
+                var pk = shinyHunter.StashedShinies[i].PKM;
+                var img = pk.Sprite();
+                StashList[i].PerformSafely(() => StashList[i].Image = img);
+            }
+
+            // Clear remaining slots if the count changed
+            for (int i = shinyHunter.StashedShinies.Count; i < 10; i++)
+            {
+                StashList[i].PerformSafely(() => StashList[i].Image = null);
             }
         }
     }

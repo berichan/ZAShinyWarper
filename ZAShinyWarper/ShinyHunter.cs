@@ -104,7 +104,7 @@ namespace PLAWarper
             {
                 PKM = pk;
                 LocationHash = locHash;
-                if (PKM is PK9 zapk)
+                if (PKM is PA9 zapk)
                 (Rolls, Seed) = ShinyRollChecker<T>.CheckValidDirtyZARNG(PKM);
             }
 
@@ -180,7 +180,10 @@ namespace PLAWarper
 
         public string GetShinyStashInfo(IList<StashedShiny<T>> stash)
         {
-            var info = new StringBuilder();
+            if (stash.Count == 0)
+                return "No stashed shinies found.";
+
+            var info = new StringBuilder("The following shinies are stashed on your save currently:\r\n\r\n");
             foreach (var pk in stash)
             {
                 info.AppendLine(pk.ToString());
