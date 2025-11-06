@@ -10,12 +10,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static ZAShinyWarper.ZAVision;
 
-namespace PLADumper
+namespace ZAShinyWarper
 {
     public partial class ZAWarpWindow : Form
     {
-        private readonly long[] jumpsPos = new long[] { 0x41EC340, 0x248, 0x00, 0x138 }; // [[[[main+41EC340]+248]+00]+138]+90
+        private readonly long[] jumpsPos = [.. PlayerPositionPointer];
         private static IRAMReadWriter bot = default!;
 
         private List<Vector3> positions = new List<Vector3>();

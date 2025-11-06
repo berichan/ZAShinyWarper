@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using static ZAShinyWarper.ZAVision;
 
 namespace PLAWarper
 {
@@ -125,8 +126,8 @@ namespace PLAWarper
         private const int PA9_SIZE = 0x158;
         private const int PA9_BUFFER = 0x1F0;
         private const string STASH_FOLDER = "StashedShinies";
-        
-        private readonly long[] jumpsPos = new long[] { 0x5F0B250, 0x120, 0x168 }; // [[[main+5F0B250]+120]+168]
+
+        private readonly long[] jumpsPos = [.. ShinyStashPointer];
 
         public IList<StashedShiny<T>> PreviousStashedShinies { get; private set; } = [];
         public IList<StashedShiny<T>> StashedShinies { get; private set; } = [];

@@ -1,4 +1,4 @@
-﻿namespace PLADumper
+﻿namespace ZAShinyWarper
 {
     partial class ZAWarpWindow
     {
