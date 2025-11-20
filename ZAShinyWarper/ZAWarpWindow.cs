@@ -125,7 +125,7 @@ namespace ZAShinyWarper
                 groupBox1.Enabled = true;
                 gBShinyHunt.Enabled = true;
                 shinyHunter.LoadStashedShinies(bot, "sets.txt");
-                MessageBox.Show($"Connected to SysBot (network). The following shinies are stashed on your save currently: \r\n{shinyHunter.GetShinyStashInfo([.. shinyHunter.StashedShinies.Reverse()])}");
+                MessageBox.Show($"Connected to sys-botbase. The following shinies are stashed on your save currently: \r\n{shinyHunter.GetShinyStashInfo([.. shinyHunter.StashedShinies.Reverse()])}");
                 bot.SendBytes(Encoding.ASCII.GetBytes("detachController\r\n"));
                 cleanUpBot();
             }
@@ -145,7 +145,7 @@ namespace ZAShinyWarper
                 groupBox1.Enabled = true;
                 gBShinyHunt.Enabled = true;
                 shinyHunter.LoadStashedShinies(bot, "sets.txt");
-                MessageBox.Show($"Connected to UsbBot (USB). The following shinies are stashed on your save currently: \r\n{shinyHunter.GetShinyStashInfo([.. shinyHunter.StashedShinies.Reverse()])}");
+                MessageBox.Show($"Connected to usb-botbase. The following shinies are stashed on your save currently: \r\n{shinyHunter.GetShinyStashInfo([.. shinyHunter.StashedShinies.Reverse()])}");
                 bot.SendBytes(Encoding.ASCII.GetBytes("detachController\r\n"));
                 cleanUpBot();
             }
